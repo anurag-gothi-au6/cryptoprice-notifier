@@ -34,7 +34,8 @@ you will see a Response like this
 ```
 
 usage: cryptonotifier [-h] [-a alert_price] [-t time_interval]
-                      [-l resp_limit resp_limit] [-c coin] [-d destination]
+               [-l resp_limit resp_limit] [-c coin] [-d destination]
+               [-cur curr]
 
 Crypto Price Notify App.
 
@@ -46,10 +47,12 @@ optional arguments:
                         interval between entries, default is 60 min
   -l resp_limit resp_limit, --resp_limit resp_limit resp_limit
                         No. Of record and time gap between record in Single
-                        Response, default 5 record and 20sec time gap
-  -c coin, --coin coin  For Selecting a Currency : -c btc/xrp/eth
+                        Response, default 5record and 20sec time gap
+  -c coin, --coin coin  For Selecting a Crypto Coin : -c btc/xrp/eth
   -d destination, --destination destination
                         Select a Destination : -d telegram/ifttt
+  -cur curr, --currency curr
+                        For Selecting a Currency : -cur INR/USD/GBP/EUR
 
 Welcome To crypto price notify app by Anurag Gothi
 
@@ -57,14 +60,14 @@ Welcome To crypto price notify app by Anurag Gothi
 ```
 to run the app type the following command
 ```
-cryptonotifier -a 20000 -t 60 -l 5 20 -d telegram -c eth
+cryptonotifier -a 250 -t 60 -l 5 20 -d telegram -c eth -cur USD
 ```
-*  -a : alert limt amount in INR
+*  -a : alert limt amount in CURRENCY YOU SELECT
 *  -t : time interval in Seconds
 *  -l : No of entries and timegap between entries per response
 * -d : For destination app like IFTTT App / Telegram 
 * -c : For crypto currency Like ETH/BTC/XRP
-
+* -cur : For selecting a currency INR/USD/GBP/EUR
 
 
 ##### Author: Anurag Gothi.

@@ -5,7 +5,7 @@ with open('README.md') as readme_file:
 
 setup_args = dict(
     name='cryptoprice-notifier',
-    version='1.9',
+    version='2.0',
     description='tool to get crypto price notification',
     long_description_content_type="text/markdown",
     long_description=README,
@@ -26,7 +26,7 @@ setup_args = dict(
     author_email='ianuraggothi@gmail.com',
     keywords=['crypto-price', 'crypto-price-notifier',
               'crypto price', 'crypto', 'Crypto'],
-    url='https://github.com/anurag-gothi-au6/crypto-price-notifier',
+    url='https://github.com/anurag-gothi-au6/cryptoprice-notifier',
     include_package_data=True
 )
 

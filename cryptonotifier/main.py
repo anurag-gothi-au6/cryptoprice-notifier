@@ -36,12 +36,6 @@ IFTTT_WEBHOOKS_IFTTT = ifttt_url + 'ifttt_updates' + ifttt_key
 IFTTT_WEBHOOKS_TELEGRAM = ifttt_url + 'bitcoin_price_update' + ifttt_key
 IFTTT_WEBHOOK_TWITTER = ifttt_url + 'twitter_news' + twitter_key
 
-# parameters to be sent to crypto API
-parameters = {
-    'start': '1',
-    'limit': '4',
-    'convert': 'INR'
-}
 
 # setting the http headers
 headers = {
@@ -52,22 +46,31 @@ headers = {
 
 
 # Function to collect Crypto Price In INR
-def crypto_price(coin):
+def crypto_price(coin, curr):
+    curr = curr.upper()
+
+    # parameters to be sent to crypto API
+    parameters = {
+        'start': '1',
+        'limit': '4',
+        'convert': curr
+    }
+
     session = requests.Session()
     session.headers.update(headers)
     response = session.get(BITCOIN_URL, params=parameters)
     data = json.loads(response.text)
     if(coin.lower() == 'btc'):
-        price = float(data['data'][0]['quote']['INR']['price'])
+        price = float(data['data'][0]['quote'][curr]['price'])
 
     elif(coin.lower() == 'xrp'):
-        price = float(data['data'][3]['quote']['INR']['price'])
+        price = float(data['data'][3]['quote'][curr]['price'])
 
     elif(coin.lower() == 'eth'):
-        price = float(data['data'][1]['quote']['INR']['price'])
+        price = float(data['data'][1]['quote'][curr]['price'])
 
     else:
-        price = float(data['data'][0]['quote']['INR']['price'])
+        price = float(data['data'][0]['quote'][curr]['price'])
 
     return round(price)
 
@@ -134,7 +137,7 @@ def response_formatter(crypto_logs, event):
             row = '{}: ₹ <b>{}</b>'.format(date, value)
             rows.append(row)
         data = '<br>'.join(rows)
-        data += '<br>next update in 1 hour stay tuned<br>Happy Earning'
+        data += '<br><br>Happy Earning'
         return data
     else:
         for crypto_value in crypto_logs:
@@ -143,7 +146,7 @@ def response_formatter(crypto_logs, event):
             row = '{}: ₹ {}'.format(date, value)
             rows.append(row)
         data = '\n'.join(rows)
-        data += '\nnext update in 1 hour stay tuned\nHappy Earning'
+        data += '\n\nHappy Earning'
         return data
 
 
@@ -169,18 +172,19 @@ def post_ifttt_twitter():
 
 
 # Function which collects price and send a notification to dest
-def response_collector(threshold, time_intervl, resp_limit, coin, dest, email):
+def response_collector(threshold, intervl, resp_limt, coin, dest, email, curr):
     crypto_logs = []
     BITCOIN_ALERT_LMIT = float(threshold[0])
-    TIME_INTERVAL = float(time_intervl[0])
+    TIME_INTERVAL = float(intervl[0])
     dest = dest.lower()
-    time_gap = float(resp_limit[1])
+    time_gap = float(resp_limt[1])
 
     # Try Except Error Handler
     try:
+        count = 0
         # infinte loop till terminated
         while True:
-            crypto_current_price = crypto_price(coin)
+            crypto_current_price = crypto_price(coin, curr)
             date = datetime.now()
             crypto_logs.append(
                 {'date': date, 'crypto_current_price': crypto_current_price})
@@ -188,25 +192,22 @@ def response_collector(threshold, time_intervl, resp_limit, coin, dest, email):
 
             # For comparing current price with threshold price
             if crypto_current_price > BITCOIN_ALERT_LMIT:
-                print('Price Below Threshold!!!\n')
-                emergency_update(email, coin, crypto_current_price)
-                print('Will Stop Response For 1 Hour For Price to Flactuate\n')
-                time.sleep(3600)
+                if count == 0:
+                    print('Price Below Threshold!!!\n')
+                    emergency_update(email, coin, crypto_current_price)
+                    count = 1
 
             # For checking if the records limit is fulfilled
-            if len(crypto_logs) == float(resp_limit[0]):
+            if len(crypto_logs) == float(resp_limt[0]):
+                response = response_formatter(crypto_logs, dest)
                 if(dest == 'ifttt'):
-                    notifier('ifttt_updates',
-                             response_formatter(crypto_logs,
-                                                dest),
-                             coin)
+                    notifier('ifttt_updates', response, coin)
                 else:
-                    notifier('bitcoin_price_update',
-                             response_formatter(crypto_logs,
-                                                dest),
-                             coin)
+                    notifier('bitcoin_price_update', response, coin)
 
+                # Clearing logs
                 crypto_logs = []
+                count = 0
 
                 # Function Call for News Update On twitter
                 post_ifttt_twitter()
@@ -254,10 +255,13 @@ def main():
                            default 5record and 20sec time gap""")
 
     cmd_input.add_argument('-c', '--coin', default='btc', metavar='coin',
-                           help='For Selecting a Currency : -c btc/xrp/eth')
+                           help='For Selecting a Crypto Coin : -c btc/xrp/eth')
     cmd_input.add_argument('-d', '--destination', default='telegram',
                            metavar='destination',
                            help='Select a Destination : -d telegram/ifttt')
+    cmd_input.add_argument('-cur', '--currency', default='INR', metavar='curr',
+                           help="""For Selecting a Currency
+                           : -cur INR/USD/GBP/EUR""")
 
     args = cmd_input.parse_args()
     print(args.resp_limit[1])
@@ -267,7 +271,7 @@ def main():
           args.alert_price[0], '\n\n - No. Of entries Per Response =',
           args.resp_limit[0], '\n\n - Crypto Currency = ',
           args.coin, '\n\n - Destination = ',
-          args.destination, '\n\n')
+          args.destination, '\n\n - Currency = ', args.currency)
 
     # Try Except Error Handler for taking email input
     try:
@@ -298,7 +302,8 @@ def main():
 
     # Response Collector Function call with all agruments
     response_collector(args.alert_price, args.time_interval,
-                       args.resp_limit, args.coin, args.destination, email)
+                       args.resp_limit, args.coin, args.destination, email,
+                       args.currency)
 
 
 # Commenting main function As it is being called with the Python Package
