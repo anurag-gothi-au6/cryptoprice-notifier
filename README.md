@@ -1,4 +1,4 @@
-# crypto-price-notifier
+# cryptoprice-notifier
 ![Bitcoin](https://www.pngitem.com/pimgs/m/520-5207199_cryptocurrency-ethereum-blockchain-altcoins-bitcoin-cryptocurrency-png-transparent.png)
 
 __This is a python script that notify crypto currency price regularly on email, telegram, and IFTTT app notifications. It provide a response after a certain time interval which you can specify. By default time interval and threshold price is set to 5 in minutes and Rs.1000000 respectively. The user has option to choose Where he want to recieve updates.__
@@ -12,6 +12,35 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
   <li>Our Python Package will make an HTTP request to the webhook URL which will trigger an action.</li>
   <li>We Getting The Price Update From coinmarketcap API and news updates from NEWS API</li>
 </ul>
+
+## Project Overview:
+•	This Project will send notification of bitcoin latest price for every one hour.
+•	The notifications will be sent to telegram channel “AttainU Bitcoin IFTTT”.
+•	The channel is global and anyone can access the channel and get regular updates of bitcoin prices. 
+
+
+## Features: 
+•	Anyone with the link can join and chat along the channel.
+•	This Project is alive forever.
+
+
+
+## Working Procedure:
+•	The project runs in ‘Python anywhere console’, which will keep the code run alive.
+•	The Project is Divided into Four Modules:
+  -	Get data Module
+  -	Format Date Module
+  -	Send Data to IFTTT
+  -	Main Module 
+  
+-	Get data Module – Here I have used request module to collect data from source(‘blockchain.com’), Once it gets data it will convert the data into json format which is returned back to the function.
+-	Format Data Module – The main objective of this module is to format the notification message which will be sent to users.
+-	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
+-	Main – Here it will ask for the server maintainer to enter the country code.
+
+•	IFTTT Applets:
+  -	Webhooks and Telegram services are used here. 
+  -	When an event is occurred in the webhooks it will send the event value to telegram
 
 ## Prerequisite
 
