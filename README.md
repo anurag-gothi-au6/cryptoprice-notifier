@@ -38,7 +38,7 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 -	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
 -	Main – Here it will ask for the All the user agruments and send a Module call accordingly.
 
-•	IFTTT Applets:
+## IFTTT Applets:
   -	Webhooks and Telegram & Twitter services  are used here. 
   -	When an event is occurred in the webhooks it will send the event value to telegram
   - And Also A news Update Is being sent to twitter
