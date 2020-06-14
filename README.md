@@ -21,26 +21,27 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 
 ## Features: 
 •	Anyone with the link can join and chat along the channel.
-•	This Project is alive forever.
+•	Will Update news over twitter handle
+•	And also if the price is greater than the threshold price it will send a notification on email
 
 
 
 ## Working Procedure:
-•	The project runs in ‘Python anywhere console’, which will keep the code run alive.
 •	The Project is Divided into Four Modules:
   -	Get data Module
   -	Format Date Module
   -	Send Data to IFTTT
   -	Main Module 
   
--	Get data Module – Here I have used request module to collect data from source(‘blockchain.com’), Once it gets data it will convert the data into json format which is returned back to the function.
+-	Get data Module – Here I have used request module to collect data from source(‘coinmarketcap'), Once it gets data it will convert the data into json format which is returned back to the function.
 -	Format Data Module – The main objective of this module is to format the notification message which will be sent to users.
 -	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
--	Main – Here it will ask for the server maintainer to enter the country code.
+-	Main – Here it will ask for the All the user agruments and send a Module call accordingly.
 
 •	IFTTT Applets:
-  -	Webhooks and Telegram services are used here. 
+  -	Webhooks and Telegram & Twitter services  are used here. 
   -	When an event is occurred in the webhooks it will send the event value to telegram
+  - And Also A news Update Is being sent to twitter
 
 ## Prerequisite
 
