@@ -28,15 +28,10 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 
 ## Working Procedure:
 •	The Project is Divided into Four Functions:
-  -	Get data Module
-  -	Format Date Module
-  -	Send Data to IFTTT
-  -	Main Module 
-  
--	Get data Module – Here I have used request module to collect data from source(‘coinmarketcap'), Once it gets data it will convert the data into json format which is returned back to the function.
--	Format Data Module – The main objective of this module is to format the notification message which will be sent to users.
--	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
--	Main – Here it will ask for the All the user agruments and send a Module call accordingly.
+  -	Parse Command line arguements
+  -	Get Crypto Price And Crypto News
+  -	Format The Data
+  -	Send Data to IFTTT 
 
 ## IFTTT Applets:
   -	Webhooks and Telegram & Twitter services  are used here. 

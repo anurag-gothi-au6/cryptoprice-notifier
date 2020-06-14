@@ -141,9 +141,7 @@ def response_formatter(crypto_logs, event, curr):
     elif curr == 'EUR':
         symbol = '€'
     elif curr == 'USD':
-        print(curr)
         symbol = '$'
-        print(symbol)
     elif curr == 'GBP':
         symbol = '£'
 
