@@ -287,14 +287,33 @@ def main():
                            : -cur INR/USD/GBP/EUR""")
 
     args = cmd_input.parse_args()
-    print(args.resp_limit[1])
+
+    dest = args.destination.lower()
+    args.currency = args.currency.upper()
+    coin = args.coin.lower()
+
+    # Checking For Correct Destination
+    if dest != 'telegram':
+        if dest != 'ifttt':
+            print(style.RED + '''\nIncorrect Destination
+setting it to telegram\n''')
+            args.destination = 'telegram'
+
+    # Checking For Correct Coin
+    if coin != 'xrp':
+        if coin != 'btc':
+            if coin != 'eth':
+                print(style.RED + '''\nIncorrect Crypto Currency
+setting it to btc\n''')
+                args.coin = 'btc'
+
     print(style.GREEN + '\nCrypto Notify App By Anurag Gothi started\n\n',
           '- Time interval = ',
           args.time_interval[0], 'Minutes\n\n - Threshold = ',
           args.alert_price[0], '\n\n - No. Of entries Per Response =',
           args.resp_limit[0], '\n\n - Crypto Currency = ',
           args.coin, '\n\n - Destination = ',
-          args.destination, '\n\n - Currency = ', args.currency)
+          args.destination, '\n\n - Currency = ', args.currency, '\n')
 
     # Try Except Error Handler for taking email input
     try:
@@ -330,5 +349,5 @@ def main():
 
 
 # Commenting main function As it is being called with the Python Package
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
