@@ -5,7 +5,7 @@ with open('README.md') as readme_file:
 
 setup_args = dict(
     name='cryptoprice-notifier',
-    version='2.0',
+    version='2.1',
     description='tool to get crypto price notification',
     long_description_content_type="text/markdown",
     long_description=README,

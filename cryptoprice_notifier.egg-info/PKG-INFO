@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: cryptoprice-notifier
-Version: 2.0
+Version: 2.1
 Summary: tool to get crypto price notification
 Home-page: https://github.com/anurag-gothi-au6/cryptoprice-notifier
 Author: Anurag Gothi
 Author-email: ianuraggothi@gmail.com
 License: MIT
-Description: # crypto-price-notifier
+Description: # cryptoprice-notifier
         ![Bitcoin](https://www.pngitem.com/pimgs/m/520-5207199_cryptocurrency-ethereum-blockchain-altcoins-bitcoin-cryptocurrency-png-transparent.png)
         
         __This is a python script that notify crypto currency price regularly on email, telegram, and IFTTT app notifications. It provide a response after a certain time interval which you can specify. By default time interval and threshold price is set to 5 in minutes and Rs.1000000 respectively. The user has option to choose Where he want to recieve updates.__
@@ -20,6 +20,36 @@ Description: # crypto-price-notifier
           <li>Our Python Package will make an HTTP request to the webhook URL which will trigger an action.</li>
           <li>We Getting The Price Update From coinmarketcap API and news updates from NEWS API</li>
         </ul>
+        
+        ## Project Overview:
+        •	This Project will send notification of bitcoin latest price for every one hour.
+        •	The notifications will be sent to telegram channel “AttainU Bitcoin IFTTT”.
+        •	The channel is global and anyone can access the channel and get regular updates of bitcoin prices. 
+        
+        
+        ## Features: 
+        •	Anyone with the link can join and chat along the channel.
+        •	Will Update news over twitter handle
+        •	And also if the price is greater than the threshold price it will send a notification on email
+        
+        
+        
+        ## Working Procedure:
+        •	The Project is Divided into Four Functions:
+          -	Get data Module
+          -	Format Date Module
+          -	Send Data to IFTTT
+          -	Main Module 
+          
+        -	Get data Module – Here I have used request module to collect data from source(‘coinmarketcap'), Once it gets data it will convert the data into json format which is returned back to the function.
+        -	Format Data Module – The main objective of this module is to format the notification message which will be sent to users.
+        -	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
+        -	Main – Here it will ask for the All the user agruments and send a Module call accordingly.
+        
+        ## IFTTT Applets:
+          -	Webhooks and Telegram & Twitter services  are used here. 
+          -	When an event is occurred in the webhooks it will send the event value to telegram
+          - And Also A news Update Is being sent to twitter
         
         ## Prerequisite
         
@@ -79,6 +109,7 @@ Description: # crypto-price-notifier
         
         
         ##### Author: Anurag Gothi.
+        
 Keywords: crypto-price,crypto-price-notifier,crypto price,crypto,Crypto
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3

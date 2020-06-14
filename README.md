@@ -27,7 +27,7 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 
 
 ## Working Procedure:
-•	The Project is Divided into Four Modules:
+•	The Project is Divided into Four Functions:
   -	Get data Module
   -	Format Date Module
   -	Send Data to IFTTT
@@ -47,7 +47,7 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 
   - Python3 & PIP
   - Telegram App  <a href="https://t.me/projectcomplete"> Click Here To Join</a> 
-  - Twitter, For news Updates <a href="https://twitter.com/news_cryptopia "> Click Here to Follow</a> 
+  - Twitter, For news Updates <a href="https://twitter.com/BitcoinUpdate2"> Click Here to Follow</a> 
   - An email account for emergency price alert
    
 ### Installation

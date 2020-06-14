@@ -29,12 +29,14 @@ class style():
 # Webhooks and Api URL
 BITCOIN_URL = 'https://tinyurl.com/cryptoprice'
 news_url = 'https://tinyurl.com/newsapicrypto'
+
 ifttt_url = 'https://maker.ifttt.com/trigger/'
 ifttt_key = '/with/key/oQJ5UgozawRtt1mcQZqAA9HOGRJc_b4dXHzRanOjAqP'
 twitter_key = '/with/key/bJ6Woc9R6E4B5-Y8PRxQo3a24MZP7_9s1G4qkr0HB26'
+
 IFTTT_WEBHOOKS_IFTTT = ifttt_url + 'ifttt_updates' + ifttt_key
 IFTTT_WEBHOOKS_TELEGRAM = ifttt_url + 'bitcoin_price_update' + ifttt_key
-IFTTT_WEBHOOK_TWITTER = ifttt_url + 'twitter_news' + twitter_key
+IFTTT_WEBHOOK_TWITTER = ifttt_url + 'twitter_news' + ifttt_key
 
 
 # setting the http headers
@@ -72,7 +74,7 @@ def crypto_price(coin, curr):
     else:
         price = float(data['data'][0]['quote'][curr]['price'])
 
-    return round(price)
+    return round(price, 2)
 
 
 # function to send email for emergency price alert
@@ -128,13 +130,28 @@ def notifier(event, value, coin):
 
 
 # Function to format the Crypto Price Response for different destinations
-def response_formatter(crypto_logs, event):
+def response_formatter(crypto_logs, event, curr):
     rows = []
+    curr = curr.upper()
+
+    # Currency Symbol Formatter
+    symbol = '₹'
+    if curr == 'INR':
+        symbol = '₹'
+    elif curr == 'EUR':
+        symbol = '€'
+    elif curr == 'USD':
+        print(curr)
+        symbol = '$'
+        print(symbol)
+    elif curr == 'GBP':
+        symbol = '£'
+
     if(event == 'telegram'):
         for crypto_value in crypto_logs:
             date = crypto_value['date'].strftime('%d.%m.%Y %H:%M')
             value = crypto_value['crypto_current_price']
-            row = '{}: ₹ <b>{}</b>'.format(date, value)
+            row = '{}: {} <b>{}</b>'.format(date, symbol, value)
             rows.append(row)
         data = '<br>'.join(rows)
         data += '<br><br>Happy Earning'
@@ -143,7 +160,7 @@ def response_formatter(crypto_logs, event):
         for crypto_value in crypto_logs:
             date = crypto_value['date'].strftime('%d.%m.%Y %H:%M')
             value = crypto_value['crypto_current_price']
-            row = '{}: ₹ {}'.format(date, value)
+            row = '{}: {} {}'.format(date, symbol, value)
             rows.append(row)
         data = '\n'.join(rows)
         data += '\n\nHappy Earning'
@@ -199,7 +216,7 @@ def response_collector(threshold, intervl, resp_limt, coin, dest, email, curr):
 
             # For checking if the records limit is fulfilled
             if len(crypto_logs) == float(resp_limt[0]):
-                response = response_formatter(crypto_logs, dest)
+                response = response_formatter(crypto_logs, dest, curr)
                 if(dest == 'ifttt'):
                     notifier('ifttt_updates', response, coin)
                 else:
@@ -241,24 +258,32 @@ def main():
         description='Crypto Price Notify App.',
         epilog='Welcome To crypto price notify app by Anurag Gothi')
 
+    # Threshold Price Agrument Deafult 1000000
     cmd_input.add_argument('-a', '--alert_price', type=int, nargs=1, default=[
                            1000000], metavar='alert_price',
                            help='threshold price of coin, default is ₹1000000')
 
-    cmd_input.add_argument('-t', '--time_interval', type=int, nargs=1,
+    # time interval arguement for delay in every response
+    cmd_input.add_argument('-t', '--time_interval', type=float, nargs=1,
                            default=[60], metavar='time_interval',
                            help='interval between entries, default is 60 min')
 
-    cmd_input.add_argument('-l', '--resp_limit', type=int, nargs=2, default=[
-                           5, 20], metavar='resp_limit',
+    # response limit agruement for setting no of resp + time gap
+    cmd_input.add_argument('-l', '--resp_limit', type=float, nargs=2, default=[
+                           3, 20], metavar='resp_limit',
                            help="""No. Of record and time gap between record in Single Response,
                            default 5record and 20sec time gap""")
 
+    # crypto coin agruement default btc
     cmd_input.add_argument('-c', '--coin', default='btc', metavar='coin',
                            help='For Selecting a Crypto Coin : -c btc/xrp/eth')
+
+    # destination agruement default telegram
     cmd_input.add_argument('-d', '--destination', default='telegram',
                            metavar='destination',
                            help='Select a Destination : -d telegram/ifttt')
+
+    # Currency Agrument for selecting response currency Default INR
     cmd_input.add_argument('-cur', '--currency', default='INR', metavar='curr',
                            help="""For Selecting a Currency
                            : -cur INR/USD/GBP/EUR""")
@@ -267,7 +292,7 @@ def main():
     print(args.resp_limit[1])
     print(style.GREEN + '\nCrypto Notify App By Anurag Gothi started\n\n',
           '- Time interval = ',
-          args.time_interval[0], 'Minutes\n\n - Threshold = ₹',
+          args.time_interval[0], 'Minutes\n\n - Threshold = ',
           args.alert_price[0], '\n\n - No. Of entries Per Response =',
           args.resp_limit[0], '\n\n - Crypto Currency = ',
           args.coin, '\n\n - Destination = ',
@@ -298,7 +323,7 @@ def main():
 
     print(style.GREEN + '\nTelgram: https://t.me/projectcomplete\n')
 
-    print(style.GREEN + 'Twitter: https://twitter.com/news_cryptopia\n\n')
+    print(style.GREEN + 'Twitter: https://twitter.com/BitcoinUpdate2\n\n')
 
     # Response Collector Function call with all agruments
     response_collector(args.alert_price, args.time_interval,
