@@ -5,7 +5,7 @@ with open('README.md') as readme_file:
 
 setup_args = dict(
     name='cryptoprice-notifier',
-    version='2.1',
+    version='2.4',
     description='tool to get crypto price notification',
     long_description_content_type="text/markdown",
     long_description=README,
@@ -14,8 +14,8 @@ setup_args = dict(
     entry_points={
         'console_scripts':
         [
-            'cryptonotifier = cryptonotifier.main:main'
-        ]
+            'cryptonotifier = cryptonotifier.main:main',
+        ],
     },
     classifiers=(
         "Programming Language :: Python :: 3",

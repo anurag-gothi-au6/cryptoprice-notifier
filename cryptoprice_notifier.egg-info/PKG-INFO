@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cryptoprice-notifier
-Version: 2.1
+Version: 2.4
 Summary: tool to get crypto price notification
 Home-page: https://github.com/anurag-gothi-au6/cryptoprice-notifier
 Author: Anurag Gothi
@@ -35,16 +35,19 @@ Description: # cryptoprice-notifier
         
         
         ## Working Procedure:
-        •	The Project is Divided into Four Functions:
-          -	Get data Module
-          -	Format Date Module
-          -	Send Data to IFTTT
-          -	Main Module 
-          
-        -	Get data Module – Here I have used request module to collect data from source(‘coinmarketcap'), Once it gets data it will convert the data into json format which is returned back to the function.
-        -	Format Data Module – The main objective of this module is to format the notification message which will be sent to users.
-        -	Send Data to IFTTT – Here the formatted data is sent to users as notifications once it acquires data from previous module.
-        -	Main – Here it will ask for the All the user agruments and send a Module call accordingly.
+          -	Parse Command line arguements
+          -	Get Crypto Price And Crypto News
+          -	Format The Data
+          -	Send Data to IFTTT 
+        
+        ## Modules:
+        •	The Project is Divided into Six Modules:
+          -	Main Module :- To parse command line arguement
+          -	Get Data Module :- To Collect Price and news from api
+          -	Format Data Module :- to format price data recieved
+          -	Notification Module : to send price and news update
+          - Emergency Update Module :- To send email update for alert price
+          - config module :- Where all the configuration file are available
         
         ## IFTTT Applets:
           -	Webhooks and Telegram & Twitter services  are used here. 
@@ -55,7 +58,7 @@ Description: # cryptoprice-notifier
         
           - Python3 & PIP
           - Telegram App  <a href="https://t.me/projectcomplete"> Click Here To Join</a> 
-          - Twitter, For news Updates <a href="https://twitter.com/news_cryptopia "> Click Here to Follow</a> 
+          - Twitter, For news Updates <a href="https://twitter.com/BitcoinUpdate2"> Click Here to Follow</a> 
           - An email account for emergency price alert
            
         ### Installation

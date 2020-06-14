@@ -27,11 +27,19 @@ __*Crypto Currency price is very flactuating. So why not be get updated regulary
 
 
 ## Working Procedure:
-•	The Project is Divided into Four Functions:
   -	Parse Command line arguements
   -	Get Crypto Price And Crypto News
   -	Format The Data
   -	Send Data to IFTTT 
+
+## Modules:
+•	The Project is Divided into Six Modules:
+  -	Main Module :- To parse command line arguement
+  -	Get Data Module :- To Collect Price and news from api
+  -	Format Data Module :- to format price data recieved
+  -	Notification Module : to send price and news update
+  - Emergency Update Module :- To send email update for alert price
+  - config module :- Where all the configuration file are available
 
 ## IFTTT Applets:
   -	Webhooks and Telegram & Twitter services  are used here. 
